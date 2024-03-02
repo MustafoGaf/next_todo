@@ -2,7 +2,7 @@ import { fetchTodo } from '@/app/lib/data';
 import { TodoType } from '@/app/lib/definition';
 import CompleteButton from '@/app/ui/todo/completedButton';
 import clsx from 'clsx';
-import CreationDate from './creationDate';
+// import CreationDate from './creationDate';
 import DeleteTodo from './deleteTodo';
 import EditTodo from './editTodo';
 
@@ -21,8 +21,8 @@ export default async function TodoList() {
 
           <h1 className="text-lg font-semibold">{todo.title}</h1>
 
-          <CreationDate creatDate={todo.date} />
-          <DeleteTodo />
+          {/* <CreationDate creatDate={todo.date} /> */}
+          <DeleteTodo id={todo.id} />
           <EditTodo />
         </div>
       ))}

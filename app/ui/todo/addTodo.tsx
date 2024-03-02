@@ -1,19 +1,19 @@
 'use client';
 
-import { createTodo } from "@/app/lib/actions";
-import { useFormState } from "react-dom";
+import { createTodo } from '@/app/lib/actions';
+import { useFormState } from 'react-dom';
 
 export default function AddTodo() {
   return (
     <form action={createTodo}>
-      <div className="flex items-center justify-center gap-[15px] rounded-md  bg-gray-50 p-4 md:p-6">
+      <div className="flex flex-wrap items-center justify-center gap-[15px] rounded-md  bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
 
         <div>
           <input
             type="text"
             name="title"
-            placeholder="Type a todo.."
+            placeholder=""
             className="rounded-[5px]"
           />
         </div>

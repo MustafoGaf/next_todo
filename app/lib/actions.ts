@@ -34,3 +34,14 @@ export async function completedTodo(id: string, status: boolean) {
   }
   revalidatePath('/todo');
 }
+
+export async function deleteTodo(id: string) {
+  try {
+    await sql`
+    DELETE FROM todos WHERE id = ${id}`;
+  } catch (error) {
+    console.log(error);
+    return { message: 'Database Error: Failed to Create Invoice.' };
+  }
+  revalidatePath('/todo');
+}
