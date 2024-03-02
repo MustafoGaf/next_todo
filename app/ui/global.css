@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.tableData {
+  display: grid;
+  grid-template-columns: 5% 55% 20% 10% 7%;
+}
