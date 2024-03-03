@@ -19,7 +19,7 @@ const links = [
 ];
 export default function Navbar() {
   const path = usePathname();
-const [hidden, setHidden] = useState<boolean>(true);
+const [hidden, setHidden] = useState<boolean>(false);
   return (
     <div className="flex items-center sm:justify-center justify-end relative">
       <div className="sm:hidden ">
