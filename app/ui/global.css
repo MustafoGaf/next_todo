@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+body{
+  overflow: hidden;
+}
 .tableData {
   display: grid;
   grid-template-columns: 9% 64% 6% 21%;
