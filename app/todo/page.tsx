@@ -6,7 +6,6 @@ export default async function Page(){
     return (
         <div>
             <div className='my-4'>
-
             <AddTodo/>
             </div>
            <TodoList/>
