@@ -4,3 +4,10 @@ export type TodoType =  {
     completed : boolean , 
     date : string
 }
+
+export type UserType = {
+    id:string , 
+    name :  string , 
+    email : string , 
+    password : string
+}
