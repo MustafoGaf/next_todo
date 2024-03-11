@@ -23,6 +23,7 @@ export default function RootLayout({
 
         {children}
         </main>
+        <script src="//code.jivo.ru/widget/1RRM4dt0Qx" async></script>
         </body>
     </html>
   );
