@@ -3,7 +3,8 @@ import { sql } from '@vercel/postgres';
 import { z } from 'zod';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
 const FormSchema = z.object({
   title: z.string(),
 });
@@ -44,4 +45,23 @@ export async function deleteTodo(id: string) {
     return { message: 'Database Error: Failed to Create Invoice.' };
   }
   revalidatePath('/todo');
+}
+
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    await signIn('credentials', formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error;
+  }
 }
