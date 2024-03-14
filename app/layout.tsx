@@ -20,8 +20,10 @@ export default function RootLayout({
         <nav>
           <SideNav />
         </nav>
+
         <main>{children}</main>
       </body>
+
     </html>
   );
 }
