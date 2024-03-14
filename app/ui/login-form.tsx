@@ -1,5 +1,8 @@
 'use client';
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
 import {
   AtSymbolIcon,
   KeyIcon,
@@ -7,6 +10,37 @@ import {
 } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { useFormState, useFormStatus } from 'react-dom';
+<<<<<<< HEAD
+// import { FormEvent } from 'react';
+// import { useRouter } from 'next/navigation';
+ import {Authenticate} from '@/app/lib/actions'
+export default function LoginForm() {
+  //  const router = useRouter();
+  //  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  //   event.preventDefault()
+ 
+  //   const formData = new FormData(event.currentTarget)
+  //   const email = formData.get('email')
+  //   const password = formData.get('password')
+ 
+  //   const response = await fetch('/api/auth/login', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({ email, password }),
+  //   })
+ 
+  //   if (response.ok) {
+  //     router.push('/profile')
+  //   } else {
+  //     // Handle errors
+  //   }
+  // }
+ const [errorMessage , dispatch] = useFormState(Authenticate , undefined)
+  return (
+    <form action={dispatch} className="space-y-3">
+      <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
+        <h1 className={`mb-3 text-2xl`}>Please log in to continue.</h1>
+=======
 import { authenticate } from '@/app/lib/actions';
 
 export default function LoginForm() {
@@ -18,6 +52,7 @@ export default function LoginForm() {
         <h1 className={` mb-3 text-2xl`}>
           Please log in to continue.
         </h1>
+>>>>>>> main
         <div className="w-full">
           <div>
             <label
@@ -64,6 +99,9 @@ export default function LoginForm() {
           className="flex h-8 items-end space-x-1"
           aria-live="polite"
           aria-atomic="true"
+<<<<<<< HEAD
+        ></div>
+=======
         >
           {errorMessage && (
             <>
@@ -72,17 +110,29 @@ export default function LoginForm() {
             </>
           )}
         </div>
+>>>>>>> main
       </div>
     </form>
   );
 }
+<<<<<<< HEAD
+ 
+function LoginButton() {
+  const { pending } = useFormStatus();
+ 
+=======
 
 function LoginButton() {
   const { pending } = useFormStatus();
 
+>>>>>>> main
   return (
     <button className="mt-4 w-full" aria-disabled={pending}>
       Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
     </button>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main
