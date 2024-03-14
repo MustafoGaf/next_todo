@@ -9,7 +9,7 @@ export default function SideNav() {
         <h1>TODO TJ</h1>
       </div>
       <div className="">
-        <Navbar />
+        <Navbar  />
       </div>
     </div>
   );
