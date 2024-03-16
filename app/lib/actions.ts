@@ -24,7 +24,7 @@ export async function createTodo(formData: FormData) {
   try {
     await sql`
         INSERT INTO todos(title , completed , date, user_id) 
-        VALUES(${title} , FALSE , ${date} ,'410544b2-4001-4271-9855-fec4b6a6442a' )`;
+        VALUES(${title} , FALSE , ${date} ,${'iuh'} )`;
   } catch (error) {
     console.log('error', error);
     return { message: 'Database Error: Failed to Create Invoice.' };

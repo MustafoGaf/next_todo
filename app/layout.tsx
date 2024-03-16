@@ -13,17 +13,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased mx-2`}>
+      <body className={`${inter.className} mx-2 antialiased`}>
         <nav>
-            <SideNav/>
+          <SideNav />
         </nav>
-        <main>
 
-        {children}
-        </main>
-        </body>
+        <main>{children}</main>
+      </body>
+
     </html>
   );
 }
