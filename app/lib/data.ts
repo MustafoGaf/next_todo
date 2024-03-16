@@ -1,15 +1,17 @@
 import { sql } from '@vercel/postgres';
 import { TodoType } from './definition';
 import { unstable_noStore as noStore } from 'next/cache';
-import { cookies } from 'next/headers';
+import { getSessionData } from './actions';
 
 export async function fetchUser() {
   return 'null';
 }
 export async function fetchTodo() {
   noStore();
+  const response = await getSessionData()
+  const user = JSON.parse(response? response : "")
   const data = await sql<TodoType>`
-    SELECT * FROM todos WHERE user_id = "ffdfds"`;
+    SELECT * FROM todos WHERE user_id = ${user.id}`;
   return data.rows;
 }
 

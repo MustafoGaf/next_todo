@@ -21,10 +21,13 @@ export async function createTodo(formData: FormData) {
     title: formData.get('title'),
   });
   const date = new Date().toString().split('GMT')[0];
+  const response = await getSessionData();
+  const user = JSON.parse(response ? response : '');
+
   try {
     await sql`
         INSERT INTO todos(title , completed , date, user_id) 
-        VALUES(${title} , FALSE , ${date} ,${'iuh'} )`;
+        VALUES(${title} , FALSE , ${date} ,${user.id} )`;
   } catch (error) {
     console.log('error', error);
     return { message: 'Database Error: Failed to Create Invoice.' };
@@ -64,10 +67,10 @@ export async function handleLogin(sessionData: any) {
   });
   // Redirect or handle the response after setting the cookie
 }
-export async function getSessionData(req: any) {
+export async function getSessionData() {
   const encryptedSessionData = cookies().get('session')?.value;
   return encryptedSessionData
-    ? JSON.parse(jwt.verify(encryptedSessionData, secret))
+    ? JSON.stringify(jwt.verify(encryptedSessionData, secret))
     : null;
 }
 
@@ -94,15 +97,20 @@ export async function authenticate(formData: FormData) {
         redirect('/');
       }
     }
-  } catch (error) {
-    if (error) {
-      // switch (error) {
-      //   case 'CredentialsSignin':
-      //     return 'Invalid credentials.';
-      //   default:
-      //     return 'Something went wrong.';
-      // }
+  } catch (error: any) {
+    if (error.type) {
+      switch (error) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
     }
     throw error;
   }
+}
+
+export async function Logout() {
+  cookies().delete('session');
+  redirect('/login');
 }
