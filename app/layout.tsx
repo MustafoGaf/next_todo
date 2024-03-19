@@ -4,7 +4,7 @@ import {inter} from '@/app/ui/font'
 import SideNav from './ui/sideNav';
 import '@/app/ui/global.css'
 export const metadata: Metadata = {
-  title: 'Acme Dashboard',
+  title: 'Todo TJ',
   description: 'The official Next.js Course Dashboard, built with App Router.',
   metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
 };
@@ -22,8 +22,8 @@ export default function RootLayout({
         </nav>
 
         <main>{children}</main>
+        <section id="modal"></section>
       </body>
-
     </html>
   );
 }

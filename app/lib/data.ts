@@ -2,10 +2,6 @@ import { sql } from '@vercel/postgres';
 import { TodoType } from './definition';
 import { unstable_noStore as noStore } from 'next/cache';
 import { getSessionData } from './actions';
-
-export async function fetchUser() {
-  return 'null';
-}
 export async function fetchTodo() {
   noStore();
   const response = await getSessionData()

@@ -5,11 +5,10 @@ import todo from '@/public/todo.png';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { FcMenu } from 'react-icons/fc';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Logout } from '../lib/actions';
-import { CiLogout } from "react-icons/ci";
-// import { UserName } from './login/user-name';
-// import { getDate } from '../lib/data';
+import { CiLogout } from 'react-icons/ci';
+import { IoCloseSharp } from 'react-icons/io5';
 
 const links = [
   { name: 'Cписок задач', href: '/todo', icon: todo, alt: 'icon Todo' },
@@ -24,6 +23,26 @@ const links = [
 export default function Navbar() {
   const path = usePathname();
   const [hidden, setHidden] = useState<boolean>(false);
+
+  const ref = useRef<HTMLUListElement>(null);
+  function handleClick(e: MouseEvent) {
+    if (ref.current != e.target && hidden) {
+      setHidden(false);
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('click', handleClick);
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  });
+  useEffect(() => {
+    return () => {
+      setHidden(false)
+    }
+  }, [])
+
   return (
     <div className="relative flex items-center justify-end sm:justify-center">
       <div
@@ -32,12 +51,14 @@ export default function Navbar() {
         })}
       >
         <button onClick={() => setHidden((prev) => !prev)}>
-          <FcMenu size={40} />
+          {hidden ? <IoCloseSharp size={40} /> : <FcMenu size={40} />}
         </button>
       </div>
       <ul
-        className={clsx(' items-center gap-[20px] sm:flex', {
-          'absolute top-11 flex h-14 w-48 flex-col items-start': hidden == true,
+        ref={ref}
+        className={clsx(' items-center gap-[20px] sm:flex sm:bg-none', {
+          'absolute top-11 flex h-44 w-72 flex-col items-center justify-center rounded-[10px] bg-[#d0d0d0f4]':
+            hidden == true,
           hidden: hidden == false,
         })}
       >
@@ -62,21 +83,18 @@ export default function Navbar() {
             </li>
           );
         })}
-       
+
         <li className={clsx('')}>
           <form
             action={async () => {
-             await Logout();
+              await Logout();
             }}
             className={clsx('flex items-center gap-[10px]', {
-              'hidden': path == '/login'
+              hidden: path == '/login',
             })}
           >
             <CiLogout />
-            <button type='submit'>
-
-            LogoOut
-            </button>
+            <button type="submit">LogoOut</button>
           </form>
         </li>
       </ul>
