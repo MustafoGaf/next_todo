@@ -1,13 +1,13 @@
 'use client';
 import { authenticate } from '@/app/lib/actions';
 import Link from 'next/link';
-
-//import { BsPersonExclamation } from 'react-icons/bs';
+import { useFormState } from 'react-dom';
+import { BsPersonExclamation } from 'react-icons/bs';
 export default function Page() {
-  
+  const [errorMessage , Login] = useFormState(authenticate , undefined)
   return (
     <main>
-      <form action={authenticate} className="space-y-3">
+      <form action={Login} className="space-y-3">
         <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
           <h1 className={` mb-3 text-2xl`}>Авторизация</h1>
           <div className="w-full">
@@ -54,12 +54,12 @@ export default function Page() {
             aria-live="polite"
             aria-atomic="true"
           >
-            {/* {errorMessage && (
+           {errorMessage && (
               <>
                 <BsPersonExclamation size={30} color="red" />
                 <p className="text-sm text-red-500">{errorMessage}</p>
               </>
-            )} */}
+            )} 
           </div>
           <button
             type="submit"

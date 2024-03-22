@@ -85,8 +85,8 @@ async function getUser(email: string): Promise<User | undefined> {
   }
 }
 export async function authenticate(
-
-  formData: FormData,
+  prev : string | undefined,
+  formData: FormData
 ) {
   const { email, password } = FormSchemaAuth.parse({
     email: formData.get('email'),
@@ -106,8 +106,8 @@ export async function authenticate(
     }else {
       return 'Неправильный адрес электронной почты';
     }
-  } catch (error) {
-    if (error instanceof AuthError) {
+  } catch (error:any) {
+    if (error) {
       switch (error.type) {
         case 'CredentialsSignin':
           return 'Invalid credentials.';
