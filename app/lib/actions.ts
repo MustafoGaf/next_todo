@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import bcrypt from 'bcrypt';
+import { AuthError } from 'next-auth';
 import { User } from './definition';
 const jwt = require('jsonwebtoken');
 const secret = process.env.AUTH_SECRET;
@@ -83,11 +84,15 @@ async function getUser(email: string): Promise<User | undefined> {
     throw new Error('Failed to fetch user.');
   }
 }
-export async function authenticate(formData: FormData) {
+export async function authenticate(
+
+  formData: FormData,
+) {
   const { email, password } = FormSchemaAuth.parse({
     email: formData.get('email'),
     password: formData.get('password'),
   });
+
   try {
     const user = await getUser(email);
     if (!!user) {
@@ -95,11 +100,15 @@ export async function authenticate(formData: FormData) {
       if (passwordsMatch) {
         handleLogin({ username: user.name, id: user.id });
         redirect('/');
+      } else {
+        return 'Неправильный адрес электронной почты или пароль. Пожалуйста, убедитесь, что вы ввели правыльные данные и повторите попытку';
       }
+    }else {
+      return 'Неправильный адрес электронной почты';
     }
-  } catch (error: any) {
-    if (error.type) {
-      switch (error) {
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
         case 'CredentialsSignin':
           return 'Invalid credentials.';
         default:
