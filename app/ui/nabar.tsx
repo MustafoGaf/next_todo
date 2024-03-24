@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Logout } from '../lib/actions';
 import { CiLogout } from 'react-icons/ci';
 import { IoCloseSharp } from 'react-icons/io5';
-
+import UserName from './user-name';
 const links = [
   { name: 'Cписок задач', href: '/todo', icon: todo, alt: 'icon Todo' },
 
@@ -23,7 +23,8 @@ const links = [
 export default function Navbar() {
   const path = usePathname();
   const [hidden, setHidden] = useState<boolean>(false);
-
+  
+  
   const ref = useRef<HTMLUListElement>(null);
   function handleClick(e: MouseEvent) {
     if (ref.current != e.target && hidden) {
@@ -31,6 +32,7 @@ export default function Navbar() {
     }
   }
 
+  
   useEffect(() => {
     document.addEventListener('click', handleClick);
     return () => {
@@ -39,9 +41,9 @@ export default function Navbar() {
   });
   useEffect(() => {
     return () => {
-      setHidden(false)
-    }
-  }, [])
+      setHidden(false);
+    };
+  }, []);
 
   return (
     <div className="relative flex items-center justify-end sm:justify-center">
@@ -57,7 +59,7 @@ export default function Navbar() {
       <ul
         ref={ref}
         className={clsx(' items-center gap-[20px] sm:flex sm:bg-none', {
-          'absolute top-11 flex h-44 w-72 flex-col items-center justify-center rounded-[10px] bg-[#d0d0d0f4]':
+          'absolute top-11 flex h-52 w-72 flex-col items-center justify-center rounded-[10px] bg-[#d0d0d0f4]':
             hidden == true,
           hidden: hidden == false,
         })}
@@ -83,7 +85,9 @@ export default function Navbar() {
             </li>
           );
         })}
-
+        
+          <UserName/>
+        
         <li className={clsx('')}>
           <form
             action={async () => {

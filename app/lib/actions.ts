@@ -23,7 +23,7 @@ export async function createTodo(formData: FormData) {
   });
   const date = new Date().toString().split('GMT')[0];
   const response = await getSessionData();
-  const user = JSON.parse(response ? response : '');
+  const user = response ? response : '';
 
   try {
     await sql`
@@ -71,7 +71,7 @@ export async function handleLogin(sessionData: any) {
 export async function getSessionData() {
   const encryptedSessionData = cookies().get('session')?.value;
   return encryptedSessionData
-    ? JSON.stringify(jwt.verify(encryptedSessionData, secret))
+    ? jwt.verify(encryptedSessionData, secret)
     : null;
 }
 
@@ -85,37 +85,25 @@ async function getUser(email: string): Promise<User | undefined> {
   }
 }
 export async function authenticate(
-  prev : string | undefined,
-  formData: FormData
+  prev: string | undefined,
+  formData: FormData,
 ) {
   const { email, password } = FormSchemaAuth.parse({
     email: formData.get('email'),
     password: formData.get('password'),
   });
 
-  try {
-    const user = await getUser(email);
-    if (!!user) {
-      const passwordsMatch = await bcrypt.compare(password, user.password);
-      if (passwordsMatch) {
-        handleLogin({ username: user.name, id: user.id });
-        redirect('/');
-      } else {
-        return 'Неправильный адрес электронной почты или пароль. Пожалуйста, убедитесь, что вы ввели правыльные данные и повторите попытку';
-      }
-    }else {
-      return 'Неправильный адрес электронной почты';
+  const user = await getUser(email);
+  if (!!user) {
+    const passwordsMatch = await bcrypt.compare(password, user.password);
+    if (passwordsMatch) {
+      handleLogin({ username: user.name, id: user.id });
+      redirect('/');
+    } else {
+      return 'Неправильный адрес электронной почты или пароль.';
     }
-  } catch (error:any) {
-    if (error) {
-      switch (error.type) {
-        case 'CredentialsSignin':
-          return 'Invalid credentials.';
-        default:
-          return 'Something went wrong.';
-      }
-    }
-    throw error;
+  } else {
+    return 'Неправильный адрес электронной почты';
   }
 }
 

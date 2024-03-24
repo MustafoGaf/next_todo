@@ -1,14 +1,15 @@
-import { fetchTodo } from '@/app/lib/data';
+import { fetchFilteredTodos, fetchTodo } from '@/app/lib/data';
 import { TodoType } from '@/app/lib/definition';
 import CompleteButton from '@/app/ui/todo/completedButton';
 import clsx from 'clsx';
-// import CreationDate from './creationDate';
-import DeleteTodo from './deleteTodo';
-import EditTodo from './editTodo';
 import OtherButton from './other-button';
 
-export default async function TodoList() {
-  const todos: TodoType[] = await fetchTodo();
+export default async function TodoList({
+  currentPage,
+}: {
+  currentPage: number;
+}) {
+  const todos: TodoType[] = await fetchFilteredTodos(currentPage);
   return (
     <div className="mx-4">
       {todos.map((todo, i) => (
@@ -23,13 +24,7 @@ export default async function TodoList() {
           <h1 className="text-lg font-semibold">{todo.title}</h1>
 
           {/* <CreationDate creatDate={todo.date} /> */}
-          
-
-          {/* <div className="block items-center justify-center gap-2 lg:flex">
-            <DeleteTodo id={todo.id} />
-            <EditTodo id={todo.id} title={todo.title} />
-          </div> */}
-          <OtherButton id={todo.id} title={todo.title}/>
+          <OtherButton id={todo.id} title={todo.title} />
         </div>
       ))}
     </div>
