@@ -1,10 +1,14 @@
 'use client';
 import { authenticate } from '@/app/lib/actions';
+import clsx from 'clsx';
 import Link from 'next/link';
-import { useFormState } from 'react-dom';
+import { useEffect, useState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
 import { BsPersonExclamation } from 'react-icons/bs';
+import Button from '../ui/login/button';
 export default function Page() {
-  const [errorMessage , Login] = useFormState(authenticate , undefined)
+  const [errorMessage, Login] = useFormState(authenticate, undefined);
+
   return (
     <main>
       <form action={Login} className="space-y-3">
@@ -50,23 +54,18 @@ export default function Page() {
             </div>
           </div>
           <div
-            className="my-2 flex h-8 items-end space-x-1"
+            className="my-3 flex h-8 items-end space-x-1"
             aria-live="polite"
             aria-atomic="true"
           >
-           {errorMessage && (
+            {errorMessage && (
               <>
                 <BsPersonExclamation size={30} color="red" />
                 <p className="text-sm text-red-500">{errorMessage}</p>
               </>
-            )} 
+            )}
           </div>
-          <button
-            type="submit"
-            className="mt-4 w-full rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-          >
-            Войти
-          </button>
+          <LoginButton />
         </div>
       </form>
       <div className="text-center">
@@ -80,4 +79,9 @@ export default function Page() {
       </div>
     </main>
   );
+}
+function LoginButton() {
+  const { pending } = useFormStatus();
+
+  return <Button status={pending} />;
 }

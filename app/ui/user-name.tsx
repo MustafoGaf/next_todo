@@ -19,7 +19,7 @@ export default function UserName() {
     getUser();
   }, []);
   return (
-    <li className="flex items-center gap-[10px]">
+    <li className="flex items-center gap-[10px] sm:hidden">
       <FaUserCircle size={20} />
       <p>{user.username}</p>
     </li>

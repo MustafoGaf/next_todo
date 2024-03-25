@@ -70,9 +70,7 @@ export async function handleLogin(sessionData: any) {
 }
 export async function getSessionData() {
   const encryptedSessionData = cookies().get('session')?.value;
-  return encryptedSessionData
-    ? jwt.verify(encryptedSessionData, secret)
-    : null;
+  return encryptedSessionData ? jwt.verify(encryptedSessionData, secret) : null;
 }
 
 async function getUser(email: string): Promise<User | undefined> {

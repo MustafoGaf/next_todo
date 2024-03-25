@@ -1,6 +1,7 @@
 'use client';
 
 import { createTodo } from '@/app/lib/actions';
+import { useFormStatus } from 'react-dom';
 
 export default function AddTodo() {
   return (
@@ -18,11 +19,22 @@ export default function AddTodo() {
         </div>
 
         <div className="flex justify-end gap-4">
-          <button className="rounded-2xl bg-green-600 px-5 py-3" type="submit">
-            Create Todo
-          </button>
+          <Button />
         </div>
       </div>
     </form>
+  );
+}
+
+function Button() {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      disabled={pending}
+      className="rounded-2xl bg-green-600 px-5 py-3"
+      type="submit"
+    >
+      Create Todo
+    </button>
   );
 }
