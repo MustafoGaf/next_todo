@@ -40,7 +40,7 @@ export default async function Page({
         <BsFilterRight />
       </div> */}
       <TodoList currentPage={currentPage} />
-      <div className="mt-5 flex w-full justify-center">
+      <div className="mt-5 mb-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
       </div>
     </div>
